@@ -7,137 +7,186 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Bengali:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <!-- নিরাপত্তা স্ক্রিপ্ট -->
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
             if(e.keyCode == 123) return false;
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
             if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
         };
     </script>
 
     <style>
         :root {
-            --bg-deep: #0d1a2d; --bg-card: rgba(13, 30, 50, 0.9); --accent-gold: #c9a227;
-            --accent-warm: #e8d5a3; --text-light: #f5f0e1; --text-muted: #8a9bb4;
+            --bg-deep: #050a15;
+            --bg-card: rgba(15, 25, 45, 0.85);
+            --accent-gold: #ffd700;
+            --accent-warm: #fff8dc;
+            --text-light: #ffffff;
+            --text-muted: #c4d4e8;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Noto Sans Bengali', sans-serif; background: var(--bg-deep); color: var(--text-light); min-height: 100vh; overflow-x: hidden; }
         .arabic-font { font-family: 'Amiri', serif; }
-        .main-bg { position: fixed; inset: 0; background: radial-gradient(ellipse at 30% 0%, rgba(201, 162, 39, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 70% 100%, rgba(201, 162, 39, 0.08) 0%, transparent 50%), linear-gradient(180deg, #0a1525 0%, #0d1a2d 50%, #0f1f35 100%); }
-        .islamic-pattern { position: fixed; inset: 0; opacity: 0.06; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23c9a227' stroke-width='0.5'%3E%3Cpath d='M40 0L80 40L40 80L0 40z'/%3E%3Ccircle cx='40' cy='40' r='15'/%3E%3Cpath d='M40 25L55 40L40 55L25 40z'/%3E%3C/g%3E%3C/svg%3E"); pointer-events: none; }
-        .mosque-silhouette { position: fixed; bottom: 0; left: 0; right: 0; height: 200px; z-index: 2; pointer-events: none; }
-        .stars-container { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
-        .star { position: absolute; background: radial-gradient(circle, #fff 0%, transparent 70%); border-radius: 50%; animation: starTwinkle var(--dur) ease-in-out infinite; animation-delay: var(--delay); }
-        @keyframes starTwinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
-        .lantern-container { position: fixed; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
-        .lantern { position: absolute; animation: lanternFloat var(--float-dur) ease-in-out infinite; filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5)); }
-        @keyframes lanternFloat { 0%, 100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-30px) rotate(5deg); } }
-        .content { position: relative; z-index: 10; min-height: 100vh; padding-bottom: 220px; }
-        .header { text-align: center; padding: 2rem 1rem 1rem; }
-        
-        /* Developer Badge Update */
-        .developer-tag {
-            display: inline-block; background: linear-gradient(135deg, rgba(201, 162, 39, 0.2), rgba(201, 162, 39, 0.05));
-            border: 1px solid rgba(201, 162, 39, 0.4); padding: 8px 20px; border-radius: 25px; font-size: 0.95rem;
-            color: var(--accent-warm); margin-bottom: 1.5rem;
-        }
-        .developer-tag span { display: block; font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
 
-        .main-title { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 700; background: linear-gradient(135deg, #ffd700, #c9a227, #e8d5a3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .hijri-text { font-size: clamp(1.2rem, 3vw, 1.6rem); color: var(--accent-gold); margin-top: 0.5rem; letter-spacing: 3px; }
+        .main-bg {
+            position: fixed; inset: 0;
+            background: 
+                radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #0a1525 0%, #050a15 100%);
+        }
+
+        .pattern-overlay {
+            position: fixed; inset: 0; opacity: 0.1; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30L30 0z' fill='none' stroke='%23ffd700' stroke-width='0.5'/%3E%3Cpath d='M30 10L50 30L30 50L10 30L30 10z' fill='none' stroke='%23ffd700' stroke-width='0.3'/%3E%3C/svg%3E");
+        }
+
+        .big-moon {
+            position: fixed; top: 5%; right: 5%; width: 120px; height: 120px;
+            background: radial-gradient(circle at 30% 30%, #fffce8, #ffd700);
+            border-radius: 50%; box-shadow: 0 0 60px rgba(255, 215, 0, 0.6), 0 0 100px rgba(255, 165, 0, 0.4);
+            z-index: 2; opacity: 0.9;
+        }
+
+        .mosque-silhouette { position: fixed; bottom: 0; left: 0; right: 0; height: 220px; z-index: 2; pointer-events: none; }
+        .stars-container { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+        .star { position: absolute; background: #fff; border-radius: 50%; animation: twinkle var(--dur) ease-in-out infinite; box-shadow: 0 0 5px #fff; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+        
+        .lantern-container { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
+        .lantern { position: absolute; animation: floatLantern var(--dur) ease-in-out infinite; }
+        @keyframes floatLantern { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-20px) rotate(3deg); } }
+
+        .content { position: relative; z-index: 10; min-height: 100vh; padding-bottom: 240px; }
+        .header { text-align: center; padding: 2.5rem 1rem 1rem; }
+
+        /* Developer Credit */
+        .developer-tag {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            padding: 10px 25px;
+            border-radius: 30px;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+        .dev-title { font-size: 0.9rem; color: #e0e0e0; letter-spacing: 1px; text-transform: uppercase; }
+        .dev-name {
+            display: block; font-size: 1.6rem; font-weight: 700; color: #ffd700;
+            text-shadow: 0 0 10px #ffd700, 0 0 20px #ffa500, 0 0 30px #ff4500;
+            animation: textGlow 2s ease-in-out infinite alternate; margin-top: 2px;
+        }
+        @keyframes textGlow {
+            from { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffa500; }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #ffd700, 0 0 40px #ffa500; }
+        }
+
+        .main-title { font-size: clamp(2.8rem, 9vw, 4.5rem); font-weight: 700; color: #fff; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+        .hijri-text { font-size: clamp(1.2rem, 3vw, 1.8rem); color: #ffd700; margin-top: 0.5rem; letter-spacing: 4px; }
+
         .divider { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 1.5rem auto; max-width: 400px; }
-        .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.5), transparent); }
-        .divider-icon { color: var(--accent-gold); font-size: 1.2rem; }
+        .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.8), transparent); }
+        
         .clock-section { text-align: center; padding: 1rem; }
-        .clock-display { font-size: clamp(2.5rem, 9vw, 5.5rem); font-weight: 700; color: var(--text-light); line-height: 1; display: flex; align-items: baseline; justify-content: center; gap: 8px; }
-        .clock-main { display: flex; align-items: baseline; }
-        .clock-seconds { font-size: 0.5em; color: var(--accent-gold); min-width: 1.8em; text-align: left; }
-        .clock-period { font-size: 0.35em; color: var(--accent-warm); background: rgba(201, 162, 39, 0.15); padding: 4px 12px; border-radius: 8px; margin-left: 10px; }
-        .date-display { font-size: 1.1rem; color: var(--text-muted); margin-top: 0.5rem; }
-        .day-badge { display: inline-block; background: linear-gradient(135deg, var(--accent-gold), #b8941f); color: #0d1a2d; padding: 4px 16px; border-radius: 20px; font-weight: 600; margin-top: 8px; }
-        .time-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
+        .clock-display { font-size: clamp(3rem, 10vw, 6rem); font-weight: 700; color: #fff; line-height: 1; display: flex; align-items: baseline; justify-content: center; gap: 8px; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
+        .clock-seconds { font-size: 0.5em; color: #ffd700; }
+        .clock-period { font-size: 0.35em; color: #ffd700; background: rgba(255, 215, 0, 0.2); padding: 4px 12px; border-radius: 8px; margin-left: 10px; border: 1px solid rgba(255, 215, 0, 0.4); }
+        .date-display { font-size: 1.2rem; color: #d1d9e6; margin-top: 0.5rem; }
+        .day-badge { display: inline-block; background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000; padding: 5px 20px; border-radius: 20px; font-weight: 700; margin-top: 8px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); }
+
+        .time-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 650px; margin: 2.5rem auto; padding: 0 1rem; }
         @media (max-width: 480px) { .time-cards { grid-template-columns: 1fr; } }
-        .time-card { background: var(--bg-card); border: 1px solid rgba(201, 162, 39, 0.25); border-radius: 20px; padding: 1.5rem; text-align: center; position: relative; overflow: hidden; transition: all 0.4s ease; }
-        .time-card::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 3px; background: linear-gradient(90deg, transparent, var(--accent-gold), transparent); }
-        .time-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); }
-        .time-card.active { border-color: var(--accent-gold); box-shadow: 0 0 30px rgba(201, 162, 39, 0.15); }
+        
+        .time-card {
+            background: rgba(10, 20, 40, 0.8); border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px; padding: 1.8rem; text-align: center; position: relative; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 215, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        .time-card:hover { transform: translateY(-5px); border-color: rgba(255, 215, 0, 0.6); box-shadow: 0 0 25px rgba(255, 215, 0, 0.2); }
+        .time-card.active { border-color: #ffd700; box-shadow: 0 0 30px rgba(255, 215, 0, 0.3); }
         .time-card.active .active-indicator { opacity: 1; }
-        .active-indicator { position: absolute; top: 10px; right: 10px; background: var(--accent-gold); color: var(--bg-deep); font-size: 0.7rem; padding: 2px 10px; border-radius: 10px; opacity: 0; transition: opacity 0.3s; }
-        .card-icon { width: 55px; height: 55px; margin: 0 auto 12px; background: linear-gradient(135deg, rgba(201, 162, 39, 0.2), rgba(201, 162, 39, 0.05)); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(201, 162, 39, 0.3); }
-        .card-icon svg { width: 28px; height: 28px; stroke: var(--accent-gold); }
-        .card-label { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 5px; }
-        .card-time { font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: 700; color: var(--accent-warm); }
-        .card-period { font-size: 0.85rem; color: var(--accent-gold); }
+        .active-indicator { position: absolute; top: 10px; right: 10px; background: #ffd700; color: #000; font-weight: 700; font-size: 0.7rem; padding: 3px 12px; border-radius: 10px; opacity: 0; }
+        .card-icon { width: 60px; height: 60px; margin: 0 auto 12px; background: rgba(255, 215, 0, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 215, 0, 0.3); }
+        .card-icon svg { width: 30px; height: 30px; stroke: #ffd700; filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); }
+        .card-label { font-size: 1rem; color: #d1d9e6; margin-bottom: 5px; }
+        .card-time { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+        .card-period { font-size: 0.9rem; color: #ffd700; font-weight: 600; }
+
         .countdown-section { text-align: center; padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
-        .countdown-grid { display: flex; justify-content: center; gap: 12px; }
-        .countdown-box { background: var(--bg-card); border: 1px solid rgba(201, 162, 39, 0.2); border-radius: 15px; padding: 12px 18px; min-width: 75px; }
-        .countdown-num { font-size: 1.8rem; font-weight: 700; color: var(--accent-warm); }
-        .countdown-text { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
-        .schedule-section { max-width: 800px; margin: 2.5rem auto; padding: 0 1rem; }
-        .section-title { font-size: 1.3rem; color: var(--accent-warm); text-align: center; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 15px; }
-        .section-title::before, .section-title::after { content: ''; flex: 1; max-width: 80px; height: 1px; background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.4), transparent); }
-        .table-container { background: var(--bg-card); border: 1px solid rgba(201, 162, 39, 0.15); border-radius: 20px; overflow: hidden; }
+        .countdown-label { font-size: 1.1rem; color: #fff; margin-bottom: 1rem; font-weight: 600; }
+        .countdown-grid { display: flex; justify-content: center; gap: 15px; }
+        .countdown-box { background: rgba(10, 20, 40, 0.8); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 15px; padding: 15px 22px; min-width: 80px; }
+        .countdown-num { font-size: 2rem; font-weight: 700; color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+        .countdown-text { font-size: 0.8rem; color: #a0aec0; margin-top: 2px; }
+
+        .schedule-section { max-width: 800px; margin: 3rem auto; padding: 0 1rem; }
+        .section-title { font-size: 1.4rem; color: #fff; text-align: center; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 15px; }
+        .section-title::before, .section-title::after { content: ''; flex: 1; max-width: 80px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent); }
+        .table-container { background: rgba(10, 20, 40, 0.8); border: 1px solid rgba(255, 215, 0, 0.15); border-radius: 20px; overflow: hidden; backdrop-filter: blur(10px); }
         .schedule-table { width: 100%; border-collapse: collapse; }
-        .schedule-table th { background: rgba(201, 162, 39, 0.1); padding: 14px 10px; text-align: center; color: var(--accent-gold); font-weight: 600; font-size: 0.9rem; }
-        .schedule-table td { padding: 12px 10px; text-align: center; border-bottom: 1px solid rgba(201, 162, 39, 0.08); font-size: 0.9rem; }
-        .schedule-table tbody tr.current-day { background: rgba(201, 162, 39, 0.12); }
-        .schedule-table tbody tr.current-day td { color: var(--accent-warm); font-weight: 600; }
-        .schedule-table tbody tr.past-day { opacity: 0.45; }
-        .day-num { display: inline-block; background: rgba(201, 162, 39, 0.15); color: var(--accent-gold); padding: 2px 10px; border-radius: 12px; font-size: 0.8rem; }
-        
-        .music-control { position: fixed; bottom: 220px; right: 20px; z-index: 100; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-        .volume-control { display: flex; align-items: center; gap: 8px; background: var(--bg-card); padding: 8px 12px; border-radius: 25px; border: 1px solid rgba(201, 162, 39, 0.2); opacity: 0; transition: opacity 0.3s; }
+        .schedule-table th { background: rgba(255, 215, 0, 0.1); padding: 14px 10px; text-align: center; color: #ffd700; font-weight: 600; }
+        .schedule-table td { padding: 12px 10px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); color: #e0e0e0; }
+        .schedule-table tbody tr.current-day { background: rgba(255, 215, 0, 0.15); }
+        .schedule-table tbody tr.current-day td { color: #fff; font-weight: 700; }
+        .schedule-table tbody tr.past-day { opacity: 0.4; }
+        .day-num { display: inline-block; background: rgba(255, 215, 0, 0.1); color: #ffd700; padding: 2px 10px; border-radius: 12px; border: 1px solid rgba(255, 215, 0, 0.2); }
+
+        .music-control { position: fixed; bottom: 230px; right: 20px; z-index: 100; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+        .volume-control { display: flex; align-items: center; gap: 8px; background: rgba(10, 20, 40, 0.9); padding: 8px 12px; border-radius: 25px; border: 1px solid rgba(255, 215, 0, 0.3); opacity: 0; transition: opacity 0.3s; }
         .music-control:hover .volume-control { opacity: 1; }
-        .volume-slider { width: 80px; height: 4px; -webkit-appearance: none; background: rgba(201, 162, 39, 0.3); border-radius: 2px; cursor: pointer; }
-        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--accent-gold); border-radius: 50%; cursor: pointer; }
-        .music-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--bg-card); border: 1px solid rgba(201, 162, 39, 0.3); color: var(--accent-gold); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-        .music-btn:hover { background: rgba(201, 162, 39, 0.15); transform: scale(1.05); }
-        .music-btn.playing { animation: musicPulse 1.5s ease-in-out infinite; border-color: var(--accent-gold); }
-        @keyframes musicPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.5); } 50% { box-shadow: 0 0 0 12px rgba(201, 162, 39, 0); } }
-        
-        /* Footer Update */
-        .footer { position: relative; z-index: 10; text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(201, 162, 39, 0.1); margin-top: 2rem; }
-        .developer-name { font-size: 1.1rem; color: var(--accent-gold); font-weight: 600; margin-bottom: 5px; }
+        .volume-slider { width: 80px; height: 4px; -webkit-appearance: none; background: rgba(255, 215, 0, 0.3); border-radius: 2px; cursor: pointer; }
+        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #ffd700; border-radius: 50%; cursor: pointer; box-shadow: 0 0 10px #ffd700; }
+        .music-btn { width: 55px; height: 55px; border-radius: 50%; background: rgba(10, 20, 40, 0.9); border: 1px solid rgba(255, 215, 0, 0.4); color: #ffd700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .music-btn:hover { background: rgba(255, 215, 0, 0.1); transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+        .music-btn.playing { border-color: #ffd700; box-shadow: 0 0 0 5px rgba(255, 215, 0, 0.1); }
+
+        .footer { position: relative; z-index: 10; text-align: center; padding: 2rem 1rem; color: #d1d9e6; font-size: 0.9rem; border-top: 1px solid rgba(255, 215, 0, 0.1); margin-top: 2rem; background: linear-gradient(to top, #050a15, transparent); }
+        .developer-name { font-size: 1.3rem; color: #ffd700; font-weight: 700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); margin-bottom: 5px; }
         
         .fade-up { opacity: 0; transform: translateY(25px); animation: fadeUp 0.7s ease-out forwards; }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } .delay-3 { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
     <div class="main-bg"></div>
-    <div class="islamic-pattern"></div>
+    <div class="pattern-overlay"></div>
+    <div class="big-moon"></div>
     <div class="stars-container" id="starsContainer"></div>
     <div class="lantern-container" id="lanternContainer"></div>
 
-    <svg class="mosque-silhouette" viewBox="0 0 1440 200" preserveAspectRatio="none">
-        <defs><linearGradient id="mosqueGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#0a1525;stop-opacity:0.8"/><stop offset="100%" style="stop-color:#0d1a2d;stop-opacity:1"/></linearGradient></defs>
-        <path fill="url(#mosqueGrad)" d="M0,200 L0,120 L100,120 L100,80 L150,80 L150,50 L200,20 L250,50 L250,80 L300,80 L300,120 L400,120 L400,100 L450,100 L450,60 L520,20 L590,60 L590,100 L700,100 L700,70 L720,70 L720,40 L760,10 L800,40 L800,70 L820,70 L820,100 L930,100 L930,60 L1000,20 L1070,60 L1070,100 L1120,100 L1120,120 L1220,120 L1220,80 L1270,80 L1270,50 L1320,20 L1370,50 L1370,80 L1420,80 L1420,120 L1440,120 L1440,200 Z"/>
-        <rect fill="#0a1525" x="180" y="30" width="15" height="90" rx="2"/><circle fill="#0a1525" cx="187" cy="30" r="8"/>
-        <rect fill="#0a1525" x="1270" y="30" width="15" height="90" rx="2"/><circle fill="#0a1525" cx="1277" cy="30" r="8"/>
+    <!-- Mosque Silhouette -->
+    <svg class="mosque-silhouette" viewBox="0 0 1440 220" preserveAspectRatio="none">
+        <path fill="#050a15" d="M0,220 L0,130 L100,130 L100,100 L150,100 L150,70 L200,40 L250,70 L250,100 L300,100 L300,130 L400,130 L400,110 L450,110 L450,70 L520,30 L590,70 L590,110 L700,110 L700,80 L720,80 L720,50 L760,20 L800,50 L800,80 L820,80 L820,110 L930,110 L930,70 L1000,30 L1070,70 L1070,110 L1120,110 L1120,130 L1220,130 L1220,100 L1270,100 L1270,70 L1320,40 L1370,70 L1370,100 L1420,100 L1420,130 L1440,130 L1440,220 Z"/>
+        <rect fill="#050a15" x="180" y="50" width="18" height="100" rx="2"/>
+        <circle fill="#050a15" cx="189" cy="50" r="10"/>
+        <rect fill="#050a15" x="1270" y="50" width="18" height="100" rx="2"/>
+        <circle fill="#050a15" cx="1279" cy="50" r="10"/>
+        <ellipse fill="none" stroke="rgba(255, 215, 0, 0.2)" stroke-width="2" cx="520" cy="110" rx="60" ry="40"/>
+        <ellipse fill="none" stroke="rgba(255, 215, 0, 0.2)" stroke-width="2" cx="1000" cy="110" rx="60" ry="40"/>
     </svg>
 
     <div class="content">
         <header class="header fade-up">
-            <!-- Updated Header -->
             <div class="developer-tag">
-                Web Design & Developer
-                <span>Boy Atikur Rahman</span>
+                <span class="dev-title">Web Design & Developer</span>
+                <span class="dev-name">Boy Atikur Rahman</span>
             </div>
             <h1 class="main-title">রমজান মাস</h1>
+            <h2 class="main-title">রমজান মাস</h1>
             <p class="hijri-text arabic-font">رمضان المبارك ١٤٤٧ هـ</p>
         </header>
 
         <div class="divider fade-up delay-1">
-            <div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div>
+            <div class="divider-line"></div><span style="color: #ffd700; font-size: 1.5rem;">✦</span><div class="divider-line"></div>
         </div>
 
         <section class="clock-section fade-up delay-1">
             <div class="clock-display">
-                <div class="clock-main">
+                <div style="display: flex; align-items: baseline;">
                     <span id="clockTime">12:00</span>
                     <span class="clock-seconds" id="clockSeconds">:০০</span>
                 </div>
@@ -174,7 +223,7 @@
         </section>
 
         <section class="schedule-section fade-up delay-4">
-            <h2 class="section-title">সময়সূচি</h2>
+            <h2 class="section-title">পূর্ণ সময়সূচি</h2>
             <div class="table-container">
                 <table class="schedule-table">
                     <thead><tr><th>তারিখ</th><th>রমজান</th><th>সেহেরি</th><th>ইফতার</th></tr></thead>
@@ -183,46 +232,60 @@
             </div>
         </section>
 
-        <!-- Updated Footer -->
         <footer class="footer">
             <div class="developer-name">Developer Boy Atikur Rahman</div>
-            <p class="dua arabic-font">اللهم بلغنا رمضان</p>
-            <p>আল্লাহ আমাদের রমজান পৌঁছে দিন</p>
+            <p class="dua arabic-font" style="font-size: 1.4rem; color: #ffd700; margin: 8px 0;">اللهم بلغنا رمضان</p>
+            <p style="color: #a0aec0;">আল্লাহ আমাদের রমজান পৌঁছে দিন</p>
         </footer>
     </div>
 
     <div class="music-control">
         <div class="volume-control">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-gold);"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="40">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #ffd700;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50">
         </div>
         <button class="music-btn" id="musicBtn" aria-label="Toggle Music">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="musicIcon"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="musicIcon"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
         </button>
     </div>
 
-    <!-- Audio Element -->
     <audio id="audioLocal" loop preload="auto">
         <source src="sound.mp3" type="audio/mpeg">
     </audio>
 
     <script>
+        // NEW UPDATED DATA
         const ramadanSchedule = [
-            { date: new Date(2026, 1, 19), sehri: "05:06", iftar: "5:53" }, { date: new Date(2026, 1, 20), sehri: "05:05", iftar: "5:53" },
-            { date: new Date(2026, 1, 21), sehri: "05:05", iftar: "5:54" }, { date: new Date(2026, 1, 22), sehri: "05:04", iftar: "5:54" },
-            { date: new Date(2026, 1, 23), sehri: "05:03", iftar: "5:55" }, { date: new Date(2026, 1, 24), sehri: "05:02", iftar: "5:55" },
-            { date: new Date(2026, 1, 25), sehri: "05:02", iftar: "5:56" }, { date: new Date(2026, 1, 26), sehri: "05:01", iftar: "5:56" },
-            { date: new Date(2026, 1, 27), sehri: "05:00", iftar: "5:56" }, { date: new Date(2026, 1, 28), sehri: "05:00", iftar: "5:57" },
-            { date: new Date(2026, 2, 1), sehri: "04:59", iftar: "5:57" }, { date: new Date(2026, 2, 2), sehri: "04:58", iftar: "5:58" },
-            { date: new Date(2026, 2, 3), sehri: "04:57", iftar: "5:58" }, { date: new Date(2026, 2, 4), sehri: "04:56", iftar: "5:59" },
-            { date: new Date(2026, 2, 5), sehri: "04:56", iftar: "5:59" }, { date: new Date(2026, 2, 6), sehri: "04:55", iftar: "5:59" },
-            { date: new Date(2026, 2, 7), sehri: "04:54", iftar: "6:00" }, { date: new Date(2026, 2, 8), sehri: "04:53", iftar: "6:00" },
-            { date: new Date(2026, 2, 9), sehri: "04:52", iftar: "6:01" }, { date: new Date(2026, 2, 10), sehri: "04:51", iftar: "6:01" },
-            { date: new Date(2026, 2, 11), sehri: "04:50", iftar: "6:01" }, { date: new Date(2026, 2, 12), sehri: "04:49", iftar: "6:02" },
-            { date: new Date(2026, 2, 13), sehri: "04:48", iftar: "6:02" }, { date: new Date(2026, 2, 14), sehri: "04:48", iftar: "6:03" },
-            { date: new Date(2026, 2, 15), sehri: "04:47", iftar: "6:03" }, { date: new Date(2026, 2, 16), sehri: "04:46", iftar: "6:03" },
-            { date: new Date(2026, 2, 17), sehri: "04:45", iftar: "6:04" }, { date: new Date(2026, 2, 18), sehri: "04:44", iftar: "6:04" },
-            { date: new Date(2026, 2, 19), sehri: "04:43", iftar: "6:04" }
+            { date: new Date(2026, 1, 19), sehri: "05:22", iftar: "5:58" },
+            { date: new Date(2026, 1, 20), sehri: "05:21", iftar: "5:58" },
+            { date: new Date(2026, 1, 21), sehri: "05:21", iftar: "5:59" },
+            { date: new Date(2026, 1, 22), sehri: "05:20", iftar: "5:59" },
+            { date: new Date(2026, 1, 23), sehri: "05:19", iftar: "6:00" },
+            { date: new Date(2026, 1, 24), sehri: "05:18", iftar: "6:00" },
+            { date: new Date(2026, 1, 25), sehri: "05:18", iftar: "6:01" },
+            { date: new Date(2026, 1, 26), sehri: "05:17", iftar: "6:01" },
+            { date: new Date(2026, 1, 27), sehri: "05:16", iftar: "6:02" },
+            { date: new Date(2026, 1, 28), sehri: "05:15", iftar: "6:02" },
+            { date: new Date(2026, 2, 1), sehri: "05:05", iftar: "6:00" },
+            { date: new Date(2026, 2, 2), sehri: "05:04", iftar: "6:00" },
+            { date: new Date(2026, 2, 3), sehri: "05:03", iftar: "6:04" },
+            { date: new Date(2026, 2, 4), sehri: "05:02", iftar: "6:04" },
+            { date: new Date(2026, 2, 5), sehri: "05:01", iftar: "6:05" },
+            { date: new Date(2026, 2, 6), sehri: "05:00", iftar: "6:05" },
+            { date: new Date(2026, 2, 7), sehri: "04:59", iftar: "6:06" },
+            { date: new Date(2026, 2, 8), sehri: "04:58", iftar: "6:06" },
+            { date: new Date(2026, 2, 9), sehri: "04:57", iftar: "6:07" },
+            { date: new Date(2026, 2, 10), sehri: "04:57", iftar: "6:07" },
+            { date: new Date(2026, 2, 11), sehri: "04:56", iftar: "6:07" },
+            { date: new Date(2026, 2, 12), sehri: "04:55", iftar: "6:08" },
+            { date: new Date(2026, 2, 13), sehri: "04:54", iftar: "6:08" },
+            { date: new Date(2026, 2, 14), sehri: "04:53", iftar: "6:09" },
+            { date: new Date(2026, 2, 15), sehri: "04:52", iftar: "6:09" },
+            { date: new Date(2026, 2, 16), sehri: "04:51", iftar: "6:10" },
+            { date: new Date(2026, 2, 17), sehri: "04:50", iftar: "6:10" },
+            { date: new Date(2026, 2, 18), sehri: "04:49", iftar: "6:10" },
+            { date: new Date(2026, 2, 19), sehri: "04:48", iftar: "6:11" },
+            { date: new Date(2026, 2, 20), sehri: "04:47", iftar: "6:11" }
         ];
 
         const banglaDays = ['রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'];
@@ -238,8 +301,8 @@
             return { ...ramadanSchedule[0], dayNum: 1 };
         }
 
-        function createStars() { const container = document.getElementById('starsContainer'); if (!container) return; for (let i = 0; i < 60; i++) { const star = document.createElement('div'); star.className = 'star'; const size = Math.random() * 3 + 1; star.style.cssText = `width: ${size}px; height: ${size}px; left: ${Math.random() * 100}%; top: ${Math.random() * 60}%; --dur: ${2 + Math.random() * 3}s; --delay: ${Math.random() * 2}s;`; container.appendChild(star); } }
-        function createLanterns() { const container = document.getElementById('lanternContainer'); if (!container) return; const lanternPositions = [{ left: '5%', top: '10%', size: 35 }, { left: '92%', top: '15%', size: 40 }, { left: '8%', top: '50%', size: 30 }, { left: '88%', top: '55%', size: 35 }]; lanternPositions.forEach((pos, i) => { const lantern = document.createElement('div'); lantern.className = 'lantern'; lantern.style.cssText = `left: ${pos.left}; top: ${pos.top}; --float-dur: ${5 + i}s; animation-delay: ${i * 0.7}s;`; lantern.innerHTML = `<svg width="${pos.size}" height="${pos.size * 1.5}" viewBox="0 0 40 60" fill="none"><path d="M20 2 L20 8" stroke="#c9a227" stroke-width="2"/><circle cx="20" cy="6" r="3" fill="#c9a227"/><path d="M12 15 Q8 25 8 35 Q8 50 12 55 L28 55 Q32 50 32 35 Q32 25 28 15 Z" fill="rgba(201,162,39,0.25)" stroke="#c9a227" stroke-width="1"/><ellipse cx="20" cy="38" rx="8" ry="12" fill="rgba(255,215,0,0.3)"/></svg>`; container.appendChild(lantern); }); }
+        function createStars() { const container = document.getElementById('starsContainer'); if (!container) return; for (let i = 0; i < 80; i++) { const star = document.createElement('div'); star.className = 'star'; const size = Math.random() * 3 + 1; star.style.cssText = `width: ${size}px; height: ${size}px; left: ${Math.random() * 100}%; top: ${Math.random() * 60}%; --dur: ${2 + Math.random() * 4}s;`; container.appendChild(star); } }
+        function createLanterns() { const container = document.getElementById('lanternContainer'); if (!container) return; const lanternPositions = [{ left: '5%', top: '15%', size: 40 }, { left: '92%', top: '20%', size: 45 }, { left: '10%', top: '55%', size: 35 }, { left: '85%', top: '50%', size: 40 }]; lanternPositions.forEach((pos, i) => { const lantern = document.createElement('div'); lantern.className = 'lantern'; lantern.style.cssText = `left: ${pos.left}; top: ${pos.top}; --dur: ${4 + i}s;`; lantern.innerHTML = `<svg width="${pos.size}" height="${pos.size * 1.5}" viewBox="0 0 40 60" fill="none"><path d="M20 2 L20 8" stroke="#ffd700" stroke-width="2"/><circle cx="20" cy="6" r="3" fill="#ffd700"/><path d="M12 15 Q8 25 8 35 Q8 50 12 55 L28 55 Q32 50 32 35 Q32 25 28 15 Z" fill="rgba(255, 215, 0, 0.2)" stroke="#ffd700" stroke-width="1.5"/><ellipse cx="20" cy="38" rx="8" ry="12" fill="rgba(255, 200, 100, 0.4)"/></svg>`; container.appendChild(lantern); }); }
 
         function updateClock() {
             const now = new Date(); const hours = now.getHours(); const minutes = now.getMinutes(); const seconds = now.getSeconds();
@@ -255,12 +318,20 @@
 
         function updateCountdown() {
             const now = new Date(); const today = getTodaySchedule();
-            const sehriMins = parseTimeToMinutes(today.sehri); const iftarMins = parseTimeToMinutes(today.iftar) + 12 * 60;
+            const sehriMins = parseTimeToMinutes(today.sehri); 
+            // Parsing Iftar PM times correctly
+            let iftarParts = today.iftar.split(':');
+            let iftarHour = parseInt(iftarParts[0]);
+            if (iftarHour < 12) iftarHour += 12; // Convert to 24h format assuming PM
+            const iftarMins = iftarHour * 60 + parseInt(iftarParts[1]);
+
             const currentMins = now.getHours() * 60 + now.getMinutes(); const currentSecs = now.getSeconds();
             let targetMins = 0; let label = ''; const sehriCard = document.getElementById('sehriCard'); const iftarCard = document.getElementById('iftarCard');
+            
             if (currentMins < sehriMins) { targetMins = sehriMins; label = 'সেহেরি শুরু হতে বাকি'; sehriCard.classList.add('active'); iftarCard.classList.remove('active'); }
             else if (currentMins < iftarMins) { targetMins = iftarMins; label = 'ইফতার বাকি'; sehriCard.classList.remove('active'); iftarCard.classList.add('active'); }
             else { targetMins = sehriMins + 24 * 60; label = 'পরবর্তী সেহেরি বাকি'; sehriCard.classList.remove('active'); iftarCard.classList.remove('active'); }
+            
             const totalSecs = (targetMins - currentMins) * 60 - currentSecs;
             const hrs = Math.floor(totalSecs / 3600); const mins = Math.floor((totalSecs % 3600) / 60); const secs = totalSecs % 60;
             document.getElementById('cHours').textContent = toBn(String(hrs).padStart(2, '0'));
@@ -282,7 +353,7 @@
             tbody.innerHTML = html;
         }
 
-        // ============ FIXED MUSIC LOGIC ============
+        // Music Logic with Auto-Play
         let isPlaying = false;
         function setupMusic() {
             const musicBtn = document.getElementById('musicBtn');
@@ -290,29 +361,41 @@
             const audioLocal = document.getElementById('audioLocal');
             const musicIcon = document.getElementById('musicIcon');
             
-            // Set initial volume
-            audioLocal.volume = 0.4;
+            audioLocal.volume = 0.5;
 
-            musicBtn.addEventListener('click', () => {
+            function togglePlay() {
                 if (isPlaying) {
                     audioLocal.pause();
                     musicBtn.classList.remove('playing');
                     musicIcon.innerHTML = '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>';
                 } else {
-                    // Play returns a promise
                     audioLocal.play().then(() => {
                         musicBtn.classList.add('playing');
                         musicIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
-                    }).catch(error => {
-                        console.log("Audio play failed (check file path or browser policy):", error);
-                        alert("Audio file could not be played. Please ensure 'sound.mp3' is in the same folder and you are using a Live Server.");
-                    });
+                    }).catch(error => { console.log("Playback blocked"); });
                 }
                 isPlaying = !isPlaying;
-            });
+            }
 
-            volumeSlider.addEventListener('input', (e) => {
-                audioLocal.volume = e.target.value / 100;
+            musicBtn.addEventListener('click', togglePlay);
+            volumeSlider.addEventListener('input', (e) => { audioLocal.volume = e.target.value / 100; });
+
+            // Auto-play logic
+            window.addEventListener('load', () => {
+                audioLocal.play().then(() => {
+                    isPlaying = true;
+                    musicBtn.classList.add('playing');
+                    musicIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+                }).catch(() => {
+                    document.body.addEventListener('click', () => {
+                        if (!isPlaying) {
+                            audioLocal.play();
+                            isPlaying = true;
+                            musicBtn.classList.add('playing');
+                            musicIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+                        }
+                    }, { once: true });
+                });
             });
         }
 
